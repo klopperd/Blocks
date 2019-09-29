@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <link href="https://fonts.googleapis.com/css?family=Poppins&display=swap" rel="stylesheet">
+    <link href="/css/myStyle.css" type="text/css" rel="stylesheet"/>
+    
+    
+    <title>project</title>
+</head>
+{{template "headernav"}}
+<body>
+    <h1>This is the Project</h1>
+    
+    <h1>Your name from data template = {{.Surname}}</h1>
+
+    <form method="POST" action="/project">     
+      <label>Name</label><input name="name" type="text" value={{.Name}} />
+      <label>Surname</label><input name="surname" type="text" value={{.Surname}} />
+      <input type="submit" value="submit" />
+  </form>
+</body>
+</html>

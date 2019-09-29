@@ -25,6 +25,13 @@ type pageData struct {
 	Navbar string
 }
 
+type projectData struct {
+	Name    string
+	Surname string
+}
+
+var pdata projectData
+
 func testHandler(w http.ResponseWriter, r *http.Request) {
 
 	data := pageData{Title: "Deon", Navbar: "hello"}
@@ -34,6 +41,38 @@ func testHandler(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func projectHandler(w http.ResponseWriter, r *http.Request) {
+
+	switch r.Method {
+	case "GET":
+
+		tmpl := template.Must(template.ParseFiles("project.html", "headernav.html"))
+		err := tmpl.Execute(w, pdata)
+		//err := tmpl.Execute(os.Stdout, data)
+		if err != nil {
+			panic(err)
+		}
+	case "POST":
+		// Call ParseForm() to parse the raw query and update r.PostForm and r.Form.
+		if err := r.ParseForm(); err != nil {
+			fmt.Fprintf(w, "ParseForm() err: %v", err)
+			return
+		}
+		//fmt.Fprintf(w, "Post from website! r.PostFrom = %v\n", r.PostForm)
+		pdata.Name = r.FormValue("name")
+		pdata.Surname = r.FormValue("surname")
+		fmt.Println("Name = ", pdata.Name)
+		fmt.Println("Surname = ", pdata.Surname)
+		fmt.Println("data posted")
+		http.Redirect(w, r, "/project", http.StatusSeeOther)
+	default:
+		fmt.Fprintf(w, "Sorry, only GET and POST methods are supported.")
+	}
+
+	fmt.Println("project executed")
+
 }
 
 func cst(w http.ResponseWriter, r *http.Request) {
@@ -61,6 +100,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 	//err := tmpls.ExecuteTemplate(w, "index.html", data)
 	//var tmpls = template.Must(template.ParseFiles("index.html", "headernav.html"))
 
+	data.Uname = pdata.Name
 	tmpl := template.Must(template.ParseFiles("index.html", "headernav.html"))
 	err := tmpl.Execute(w, data)
 	if err != nil {
@@ -77,10 +117,14 @@ func about(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
+	pdata.Name = "Deon"
+	pdata.Surname = "Kloppers"
+
 	router := mux.NewRouter()
 	router.HandleFunc("/", index)
 	router.HandleFunc("/about", about)
 	router.HandleFunc("/test", testHandler)
+	router.HandleFunc("/project", projectHandler)
 	router.HandleFunc("/cst", cst)
 
 	router.PathPrefix("/css/").Handler(http.StripPrefix("/css/", http.FileServer(http.Dir("./css"))))

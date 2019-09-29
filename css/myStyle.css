@@ -24,15 +24,15 @@ nav {
       -ms-flex-align: center;
           align-items: center;
   min-height: 8vh;
-  background-color: #37887d;
+  background-color: #ffffff;
   font-family: 'Poppins', sans-serif;
 }
 
 .logo {
-  color: #562f83;
+  color: #1e1e1f;
   text-transform: uppercase;
-  letter-spacing: 5px;
-  font-size: 20px;
+  letter-spacing: 10px;
+  font-size: 30px;
 }
 
 .nav-links {
@@ -49,7 +49,7 @@ nav {
 }
 
 .nav-links a {
-  color: #c5c1c1;
+  color: #666565;
   text-decoration: none;
   letter-spacing: 3px;
   font-weight: bold;
@@ -84,7 +84,7 @@ nav {
     right: 0px;
     height: 92vh;
     top: 8vh;
-    background-color: #5D4954;
+    background-color: rgb(189, 189, 189);
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
