@@ -6,7 +6,12 @@
 }
 
 body {
-	background: rgb(135, 180, 204);
+  background: rgb(187, 208, 219);
+}
+
+.aboutcontent{
+  padding: 30px;
+  background: rgb(161, 166, 168);
 }
 
 nav {
